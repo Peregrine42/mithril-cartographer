@@ -6,11 +6,13 @@ gem 'uglifier', '>= 1.3.0'
 gem 'mongoid'
 gem 'mithril_rails'
 gem 'sprockets-rails', '~> 2.0'
+gem 'slim'
 
 group :development, :test do
   gem 'byebug'
   gem 'cucumber-rails', require: false
   gem 'database_cleaner'
+  gem 'poltergeist'
   gem 'rspec-rails'
   gem 'teaspoon-jasmine'
   gem 'mithril-query-rails', 
