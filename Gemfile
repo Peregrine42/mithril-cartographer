@@ -7,6 +7,7 @@ gem 'mongoid'
 gem 'mithril_rails'
 gem 'sprockets-rails', '~> 2.0'
 gem 'slim'
+gem 'leaflet-rails'
 
 group :development, :test do
   gem 'byebug'

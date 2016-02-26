@@ -12,4 +12,5 @@
 //
 //= require mithril
 //= require mithril_ujs
+//= require leaflet
 //= require_tree .
