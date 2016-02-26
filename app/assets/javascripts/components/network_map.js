@@ -44,4 +44,3 @@ NetworkMap.config = function(attrs) {
     }
   }
 }
-
