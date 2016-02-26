@@ -7,31 +7,40 @@ NetworkMap.view = function(ctrl, attrs) {
 NetworkMap.config = function(attrs) {
   return function(element, isInitialized) {
     if(!isInitialized) {
-      var osmUrl = 'http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png';
-      var terrain = L.tileLayer(osmUrl, { maxZoom: 18 })
-
-      var markers = attrs.nodes.map(function(coord) {
-        return L.marker(coord);
+      var layer_hashs = attrs.layers.map(function(layer_data) {
+        if (layer_data.url) {
+          var url = layer_data.url;
+          var layer = L.tileLayer(url, { maxZoom: 18 });
+          return { name: layer_data.name, layer: layer };
+        } else if (layer_data.points) {
+          var markers = attrs.nodes.map(function(coord) {
+            var marker = L.marker(coord, { draggable: true });
+            return marker;
+          });
+          var layer = L.layerGroup(markers);
+          return { name: layer_data.name, layer: layer };
+        }
       });
-      var devices = L.layerGroup(markers);
 
-      var baseMaps = {
-      };
-      var overlayMaps = {
-        "terrain": terrain,
-        "devices": devices
-      };
+      var layers = layer_hashs.map(function(hash) { return hash.layer });
+
+      var baseMaps = {};
+      var overlayMaps = {};
+      layer_hashs.forEach(function(hash) {
+        overlayMaps[hash.name] = hash.layer;
+      });
 
       var map = L.map(element, {
         center: attrs.centre,
         zoom: 12,
-        layers: [ terrain, devices ]
+        layers: layers
       });
 
       var layersControl = L.control.layers(
-          baseMaps, 
-          overlayMaps,
-          { autoZIndex: true }).addTo(map);
+        baseMaps, 
+        overlayMaps,
+        { autoZIndex: true }
+      ).addTo(map);
     }
   }
 }

@@ -1,4 +1,6 @@
-body {
+.leaflet-container {
+  background: #FFF;
+  outline: 0;
 }
 
 .map {
