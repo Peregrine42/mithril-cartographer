@@ -13,7 +13,8 @@ NetworkMap.config = function(attrs) {
           var layer = L.tileLayer(url, { maxZoom: 18 });
           return { name: layer_data.name, layer: layer };
         } else if (layer_data.points) {
-          var markers = attrs.nodes.map(function(coord) {
+          var markers = layer_data.points.map(function(point) {
+            var coord = [point.long, point.lat];
             var marker = L.marker(coord, { draggable: true });
             return marker;
           });
