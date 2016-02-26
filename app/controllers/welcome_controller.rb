@@ -1,5 +1,8 @@
 class WelcomeController < ApplicationController
   def index
+    points = Document.all.map(&:attributes)
+    puts points.inspect
+
     @layers = [
       { 
         name: 'terrain', 
@@ -7,18 +10,7 @@ class WelcomeController < ApplicationController
       },
       {
         name: 'devices',
-        points: [
-          { 
-            name: '72xx108',
-            long: 52.0594, 
-            lat: 1.1556
-          },
-          { 
-            name: '72xx109',
-            long: 52.0600,
-            lat: 1.1556
-          }
-        ]
+        points: points
       }
     ]
   end

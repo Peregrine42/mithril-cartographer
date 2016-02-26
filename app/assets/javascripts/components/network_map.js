@@ -14,7 +14,9 @@ NetworkMap.config = function(attrs) {
           return { name: layer_data.name, layer: layer };
         } else if (layer_data.points) {
           var markers = layer_data.points.map(function(point) {
-            var coord = [point.long, point.lat];
+            var long = parseFloat(point.long);
+            var lat = parseFloat(point.lat);
+            var coord = [ lat, long ];
             var marker = L.marker(coord, { draggable: true });
             return marker;
           });
