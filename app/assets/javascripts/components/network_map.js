@@ -17,10 +17,30 @@ NetworkMap.config = function(attrs) {
             var longitude = parseFloat(point.long);
             var latitude = parseFloat(point.lat);
             var coord = [ latitude, longitude ];
-            var marker = L.marker(coord, { draggable: true });
+            var marker = L.circleMarker(coord, 
+              { draggable: true, 
+                fillOpacity: 1, 
+                radius: 5, 
+                color: 'blue' }
+            );
             return marker;
           });
           var layer = L.layerGroup(markers);
+          return { name: layer_data.name, layer: layer };
+        } else if (layer_data.lines) {
+          var lines = layer_data.lines.map(function(line) {
+            var coords = line.coords;
+            coords = coords.map(function(coord) {
+              return coord.map(function(number) { 
+                return parseFloat(number);
+              });
+            });
+            var line = L.polyline(coords, 
+              {color: 'blue', weight: 2}
+            );
+            return line;
+          });
+          var layer = L.layerGroup(lines);
           return { name: layer_data.name, layer: layer };
         }
       });
@@ -38,6 +58,8 @@ NetworkMap.config = function(attrs) {
         zoom: 12,
         layers: layers
       });
+
+      console.log(layers);
 
       var layersControl = L.control.layers(
         baseMaps, 
